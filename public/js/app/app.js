@@ -1,6 +1,5 @@
 //Check App is defined
 if(!App) var App;
-else return;
 
 App = new (function(window, document){
 	var self = this;
@@ -64,13 +63,6 @@ App = new (function(window, document){
 
 		self.resources_length = scripts.length + stylesheets.length;
 
-		for(i in scripts){
-			var s = document.createElement('script');
-			s.src = scripts[i];
-			s.onload = self.checkAllResourcesLoaded;
-			document.head.appendChild(s);
-		}
-
 		for(i in stylesheets){
 			var t = document.createElement('link');
 			t.href = stylesheets[i];
@@ -78,10 +70,18 @@ App = new (function(window, document){
 			t.onload = self.checkAllResourcesLoaded;
 			document.head.appendChild(t);
 		}
+
+		for(i in scripts){
+			var s = document.createElement('script');
+			s.src = scripts[i];
+			s.onload = self.checkAllResourcesLoaded;
+			document.head.appendChild(s);
+		}
+
 	}
 
 	this.start = function(){
-		location.hash = "#/index";
+		if(window.location.hash.length === 0)	location.hash = "#/index";
 	}
 
 	//Listeners

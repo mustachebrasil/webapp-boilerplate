@@ -5,7 +5,13 @@
 
 var express = require('express')
   , http = require('http')
-  , path = require('path');
+  , path = require('path')
+  , router = require("./routes/router")
+  , mongoose = require('mongoose');
+
+
+/* DB Config */
+//mongoose.connect('mongodb://<user>:<password>@<domain>:<port>/<dbname>');
 
 var app = express();
 
@@ -27,11 +33,8 @@ app.configure('development', function(){
   app.use(express.errorHandler());
 });
 
-var router = {
-  main: require("./routes/index")
-};
-
-app.get('/', router.main.index);
+//Parsing Route
+router.parse(app);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));

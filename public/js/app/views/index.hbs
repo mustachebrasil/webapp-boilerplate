@@ -40,11 +40,10 @@
 
 	<div class="masthead">
 	  <ul class="nav nav-pills pull-right">
-	    <li class="active"><a href="#">Home</a></li>
-	    <li><a href="#">About</a></li>
-	    <li><a href="#">Contact</a></li>
+	  	<li><a href="#/login"><i class="icon-user"></i></a></li>
+      <li><a href="#/login">Login</a></li>
 	  </ul>
-	  <h3 class="muted">Project name</h3>
+	  <h3 class="muted">Project Name</h3>
 	</div>
 
 	<hr>
@@ -79,12 +78,25 @@
 	    <h4>Subheading</h4>
 	    <p>Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
 	  </div>
-	</div>
-
-	<hr>
+	</div> 
 
 	<div class="footer">
-	  <p>© Company 2013</p>
+	  <p>© Project Name 2013</p>
 	</div>
 
 </div>
+
+<!-- Project Name -->
+<script type="text/javascript">
+//For User Connected
+App.controller.user.connected(App.controller.main.renderUserInfo);
+
+//For User Connect
+App.controller.user.done(function(response){
+	console.log('response', response);
+	App.controller.main.renderUserInfo(App.controller.user.getAuthResponse());
+});
+
+//For User Disconnected
+App.controller.user.disconnected(App.controller.login.renderUserDisconnected);
+</script>

@@ -1,29 +1,34 @@
-App.router = new (function(){
-	//Check Dependecies
-	if(!window.addHashChange) window.location.reload();
-	if(!window.$) window.location.reload();
+if(!App.router){
 
-	var self = this;
+	App.router = (function(){
+		var self = this;
 
-	this.router = function(e){
-		var pathname = location.pathname
-			,	hash 		 = location.hash.replace('#','')
-			,	regex;
+		this.route = function(e){
+			var pathname = location.pathname
+				,	hash 		 = location.hash.replace('#','')
+				,	regex;
 
+			console.log("Loading ", hash);
+
+			//	Routes
+			//
+
+			//Index
+			regex = /\/index/;
+			if(regex.test(hash) === true){ App.controller.main.index(); return;}
+
+			//Login
+			regex = /\/login/;
+			if(regex.test(hash) === true){ App.controller.main.login(); return;}
+
+		}
+
+		addHashChange(self.route);
 		
-		//	Routes
-		//
+		return(this);
+	})();
 
-		//Index
-		regex = /\/index/;
-		if(regex.test(hash) === true) App.controller.main.index();
-	}
 
-	//Listeners
-	addHashChange(self.router);
-
-	//Call self.router when reload page
-	if(window.location.hash.length > 0)	$(function(){ self.router(); });
-
-	return(this);
-})();
+	if(window.location.hash.length === 0)	$(function(){window.location.hash = "#/index";});			 			//Call App.router.route when init app
+	else if(window.location.hash.length > 0)	$(function(){ self.route(); });													//Call self.router when reload page
+}	
